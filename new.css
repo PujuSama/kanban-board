@@ -1,0 +1,36 @@
+*{
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+}
+#container{
+   
+   display: flex;
+    padding:30px ;
+
+}
+.board{
+    color: white;
+    width: 200px;
+    background-color: red;
+    padding: 10px;
+    text-align: center;
+    min-height: 400px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+body{
+    background-color: black;
+}
+.taskarea{
+
+}
+.add-Task-Btn{
+padding: 6px,16x;
+width: 100px;
+border-radius: 8px;
+align-self: center;
+
+}
