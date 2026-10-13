@@ -5,6 +5,19 @@ function createBoard(title){
     const heading=document.createElement('h1');
     heading.textContent=title;
     heading.dataset.title=title;
+    heading.addEventListener('click',function(){
+      let userInput= document.createElement('input')
+      userInput.value=heading.dataset.title;
+      heading.replaceWith(userInput)
+      userInput.addEventListener('keydown',function(event){
+        if(event.key==='Enter'){
+          heading.dataset.title=userInput.value;
+          heading.textContent=userInput.value
+          userInput.replaceWith(heading);
+          updateCount(taskArea,heading)
+        }
+      })
+    })
     const taskArea=document.createElement('div');
     const addTask=document.createElement('button');
     addTask.classList.add('add-Task-Btn');
@@ -61,5 +74,10 @@ function addATask(addTaskButton,taskArea,heading){
 function updateCount(taskArea,heading){
 const allSavedTasks=taskArea.querySelectorAll('.saved-tasks');
 const total=allSavedTasks.length
+if(total===0){
+heading.textContent=heading.dataset.title;
+}else{
+
 heading.textContent=`${heading.dataset.title} (${total})`
+}
 }
