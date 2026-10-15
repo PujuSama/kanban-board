@@ -1,10 +1,20 @@
 const container=document.getElementById('container');
+const addBoard=document.getElementById('add-board-btn')
 
 function createBoard(title){
     const board=document.createElement('div');
+    const header=document.createElement('div')
     const heading=document.createElement('h1');
+    const menuBtn=document.createElement('button')
+    menuBtn.textContent='⋮'
+    const boardMenu=document.createElement('div');
+    boardMenu.classList.add('board-menu');
     heading.textContent=title;
     heading.dataset.title=title;
+    const clrBtn=document.createElement('button')
+    clrBtn.textContent='change colour'
+    const delBord=document.createElement('button')
+    delBord.textContent='delete board'
     heading.addEventListener('click',function(){
       let userInput= document.createElement('input')
       userInput.value=heading.dataset.title;
@@ -18,15 +28,40 @@ function createBoard(title){
         }
       })
     })
+    menuBtn.addEventListener('click',function(){
+    if(boardMenu.style.display==='none'||boardMenu.style.display===''){
+boardMenu.style.display='block';
+    }  else{
+      boardMenu.style.display='none';
+    }
+    })
+  delBord.addEventListener('click',function(){
+    board.remove()
+  })
+  clrBtn.addEventListener('click',function(){
+    const colorPicker=document.createElement('input')
+    colorPicker.type='color';
+    
+    colorPicker.addEventListener('input',function(){
+      const pickedClr=colorPicker.value
+      board.style.backgroundColor=pickedClr
+    })
+    colorPicker.click();
+  })
     const taskArea=document.createElement('div');
     const addTask=document.createElement('button');
     addTask.classList.add('add-Task-Btn');
     addTask.textContent='Add Task';
     taskArea.classList.add('taskarea');
     board.classList.add('board');
-    board.appendChild(heading);
+    header.appendChild(heading);
+    header.appendChild(menuBtn);
+    board.appendChild(header)
     board.appendChild(taskArea);
     board.appendChild(addTask);
+    boardMenu.appendChild(delBord)
+    boardMenu.appendChild(clrBtn)
+    header.appendChild(boardMenu)
 
     addATask(addTask,taskArea,heading)
     return board;
@@ -52,11 +87,24 @@ function addATask(addTaskButton,taskArea,heading){
     const input=taskName.value;
     const task =document.createElement('div')
     task.classList.add('saved-tasks')
-    let taskContent=document.createElement('div');
-      let delBtn=document.createElement('button');
-    taskContent.textContent=input
-    delBtn.textContent='Delete'
-    
+   let taskContent=document.createElement('div');
+   let taskText=document.createElement('span');
+   let delBtn=document.createElement('button');
+   taskText.textContent=input
+   delBtn.textContent='Delete'
+    taskText.addEventListener('click',function(){
+      let editInput=document.createElement('input');
+      editInput.value=taskText.textContent
+      taskText.replaceWith(editInput);
+      editInput.addEventListener('keydown',function(event){
+        if(event.key==='Enter'){
+         taskText.textContent =editInput.value
+          editInput.replaceWith(taskText)
+         
+        }
+      })
+    })
+    taskContent.appendChild(taskText)
     taskContent.appendChild(delBtn)
     task.appendChild(taskContent)
     taskArea.appendChild(task)
@@ -81,3 +129,7 @@ heading.textContent=heading.dataset.title;
 heading.textContent=`${heading.dataset.title} (${total})`
 }
 }
+ addBoard.addEventListener('click',function(){
+  const newBoard=createBoard('add title');
+  container.appendChild(newBoard);
+ }) 

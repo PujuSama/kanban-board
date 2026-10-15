@@ -24,13 +24,14 @@
 body{
     background-color: black;
 }
-.taskarea{
 
-}
 .add-Task-Btn{
 padding: 6px,16x;
 width: 100px;
 border-radius: 8px;
 align-self: center;
 
+}
+.board-menu{
+    display: none;
 }
